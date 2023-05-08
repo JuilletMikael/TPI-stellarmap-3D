@@ -1,3 +1,11 @@
+/**
+ *  @file      Asteroid.js
+ *  @brief     Class of asteroid
+ *  @author    Created by Miakel Juillet
+ *  @version   08.05.2023
+ */
+
+
 import * as THREE from 'three';
 
 class Asteroid {

@@ -1,3 +1,10 @@
+/**
+ *  @file      PlanetaryCelestialBody.js
+ *  @brief     Class of Planetary Celestial Body
+ *  @author    Created by Miakel Juillet
+ *  @version   08.05.2023
+ */
+
 import * as THREE from 'three';
 
 class PlanetaryCelestialBodies {
