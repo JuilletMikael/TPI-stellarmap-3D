@@ -3,6 +3,7 @@
     "vite": "^4.3.4"
   },
   "dependencies": {
+    "moment": "^2.29.4",
     "three": "^0.152.2"
   }
 }
