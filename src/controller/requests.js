@@ -5,12 +5,9 @@
  *  @version   08.05.2023
  */
 
-import PlanetaryCelestialBodies from '../assets/PlanetaryCelestialBodies.json';
 import { GetNearEarthObjects, GetHorizonSpecificBody } from '../model/requests.js';
 
+export async function GetPlanetaryCelestialBodies(body) {
 
-export function GetPlanetaryCelestialBodies() {
-    const planets = PlanetaryCelestialBodies.planets;
-
-    console.log(GetHorizonSpecificBody(199));
+    console.log(await GetHorizonSpecificBody(body));
 }

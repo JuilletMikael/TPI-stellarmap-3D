@@ -31,25 +31,18 @@ export function GetHorizonSpecificBody(bodyId) {
 
         fetch(formatURL(urlHorizon, parameters), { mode: 'no-cors' })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log(data);
-            return data;
+            resolve(response);
         })
         .catch(error => {
             console.error('Error:', error);
-            return null;
+            resolve(error);
         });
   
     })
 }
   
 /**
- * Get current weather conditions, the next 14 days and others
+ * Get near earth objects informations
  *
  * @return Response from API 
  */
@@ -96,6 +89,5 @@ function formatURL(url, parameters) {
 
     });
 
-    console.log(fullURL)
     return fullURL;
 }
