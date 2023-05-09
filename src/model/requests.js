@@ -29,7 +29,11 @@ export function GetHorizonSpecificBody(bodyId) {
         parameters.STOP_TIME = moment().format('YYYY-MM-DD');
         parameters.STEP_SIZE = '1d';
 
-        fetch(formatURL(urlHorizon, parameters), { mode: 'no-cors' })
+        fetch(formatURL(urlHorizon, parameters), {
+            headers: {
+                'Origin' : 'http://localhost:5173'
+              }
+        })
         .then(response => {
             resolve(response);
         })
