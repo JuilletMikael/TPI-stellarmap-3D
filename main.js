@@ -5,10 +5,8 @@
  *  @version   08.05.2023
  */
 
-import { GetPlanetaryCelestialBodies } from './src/controller/requests.js';
 import PlanetaryCelestialBodies from './src/assets/PlanetaryCelestialBodies.json';
+import Allplanets from './src/assets/AllPlanetsData-08-05-2023.json';
+import {horizonAPI} from './src/model/dataFilter.js';
 
-const planets = PlanetaryCelestialBodies.planets;
-
-GetPlanetaryCelestialBodies(499)
-
+horizonAPI(Allplanets.planets[1].result);

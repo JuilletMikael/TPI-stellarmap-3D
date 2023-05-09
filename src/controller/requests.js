@@ -5,9 +5,4 @@
  *  @version   08.05.2023
  */
 
-import { GetNearEarthObjects, GetHorizonSpecificBody } from '../model/requests.js';
-
-export async function GetPlanetaryCelestialBodies(body) {
-
-    console.log(await GetHorizonSpecificBody(body));
-}
+import { GetNearEarthObjects } from '../model/requests.js';
