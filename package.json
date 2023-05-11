@@ -1,9 +1,13 @@
 {
   "devDependencies": {
-    "vite": "^4.3.4"
+    "vite": "^4.3.4",
+    "vitest": "^0.31.0"
   },
   "dependencies": {
     "moment": "^2.29.4",
     "three": "^0.152.2"
+  }, 
+  "scripts": {
+    "test" : "vitest"
   }
 }
