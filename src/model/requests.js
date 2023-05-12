@@ -5,8 +5,6 @@
  *  @version   08.05.2023
  */
 
-import moment from 'moment';
-
 const urlHorizon = import.meta.env.VITE_API_URL_HORIZON;
 const urlNeo = import.meta.env.VITE_API_URL_NEO;
 const APIkey = import.meta.env.VITE_API_KEY;
@@ -50,24 +48,22 @@ export function GetHorizonSpecificBody(bodyId) {
  *
  * @return Response from API 
  */
-export function GetNearEarthObjects() {
+export function GetNearEarthObjects(apiKey, startDate, endDate) {
     return new Promise(resolve => {
         const parameters = {};
-        parameters.start_date = moment().subtract(1, 'day').format('YYYY-MM-DD');
-        parameters.end_date = moment().format('YYYY-MM-DD');
-        parameters.api_key = APIkey;
+        parameters.start_date = startDate;
+        parameters.end_date = endDate;
+        parameters.api_key = apiKey;
 
         fetch(formatURL(urlNeo, parameters))
         .then(response => {
-            console.log(response)
-            return response.json()
+            resolve(response.json()) 
         })
         .then(data => {
-            console.log(data)
             resolve(data.data);
         })
         .catch(function (err) {
-            console.log("Something went wrong!", err);
+            resolve("Something went wrong!", err);
         });
   
     })

@@ -5,7 +5,16 @@
  *  @version   12.05.2023
  */
 
-import Allplanets from './src/assets/AllPlanetsData-08-05-2023.json';
-import {horizonAPIFilter} from './src/model/dataFilter.js';
+import { horizonAPIFilter } from './src/model/dataFilter.js';
+import { GetAsteroid } from './src/controller/requests.js'
 
-console.log(horizonAPIFilter(Allplanets.planets[0].result));
+async function main() {
+    const allPlanets = await import('./src/assets/AllPlanetsData-08-05-2023.json');
+    const filteredPlanet = horizonAPIFilter(allPlanets.planets[0].result);
+    console.log(filteredPlanet);
+    
+    const asteroid = await GetAsteroid();
+    console.log(asteroid);
+  }
+  
+  main();
