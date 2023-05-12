@@ -14,7 +14,7 @@
 export function horizonAPIFilter(data) {
   
   // Delete space in text to have uniform data
-  let texteSansEspaces = data.replace(/\s+/g, "");
+  let dataWithoutSpace = data.replace(/\s+/g, "");
   
   // Regex define for all elements
   const regexNameID = /Revised:\w+\d+,\d+([^\d]+)(\d+)/
@@ -30,16 +30,16 @@ export function horizonAPIFilter(data) {
 
 
   // Match data with regex
-  const matchNameID = texteSansEspaces.match(regexNameID);
-  const matchDensity = texteSansEspaces.match(regexDensity);
-  const matchRotationRate = texteSansEspaces.match(regexRotationRate);
-  const matchMeanRadius = texteSansEspaces.match(regexMeanRadius);
-  const matchOrbitPeriod  = texteSansEspaces.match(regexOrbitPeriod);
-  const matchMeanTemp = texteSansEspaces.match(regexMeanTemp);
-  const matchObliquity = texteSansEspaces.match(regexObliquity);
-  const matchRotationDays = texteSansEspaces.match(regexRotationDays);
-  const matchOrbitalSpeed = texteSansEspaces.match(regexOrbitalSpeed);
-  const matchPlacment = texteSansEspaces.match(regexPlacment);
+  const matchNameID = dataWithoutSpace.match(regexNameID);
+  const matchDensity = dataWithoutSpace.match(regexDensity);
+  const matchRotationRate = dataWithoutSpace.match(regexRotationRate);
+  const matchMeanRadius = dataWithoutSpace.match(regexMeanRadius);
+  const matchOrbitPeriod  = dataWithoutSpace.match(regexOrbitPeriod);
+  const matchMeanTemp = dataWithoutSpace.match(regexMeanTemp);
+  const matchObliquity = dataWithoutSpace.match(regexObliquity);
+  const matchRotationDays = dataWithoutSpace.match(regexRotationDays);
+  const matchOrbitalSpeed = dataWithoutSpace.match(regexOrbitalSpeed);
+  const matchPlacment = dataWithoutSpace.match(regexPlacment);
   
   // Return data in object form
   return {

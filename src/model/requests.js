@@ -8,6 +8,7 @@
 const urlHorizon = import.meta.env.VITE_API_URL_HORIZON;
 const urlNeo = import.meta.env.VITE_API_URL_NEO;
 const APIkey = import.meta.env.VITE_API_KEY;
+import moment from 'moment';
 
 /**
  * Get information about a specicific body
