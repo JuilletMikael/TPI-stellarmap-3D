@@ -6,27 +6,23 @@
  */
 
 export function horizonAPI(data) {
+  
   let texteSansEspaces = data.replace(/\s+/g, "");
-
-  const regexRadius = /Vol\.MeanRadius\(km\)=(\d+(?:\.\d+)?)/;
-  //const regexRotationRate = /rot\.rate(?:,)?\(rad\/s\)=\s*(-?\d+\.\d+)/;
-
-  console.log(texteSansEspaces);
   
   const regexNameID = /Revised:\w+\d+,\d+([^\d]+)(\d+)/
-  const regexDensity = /Density(?:\(gcm\^-3\)|,g\/cm\^3)=(\d+\.\d+)/
-  const regexRotationRate = /[Rr]ot\.[Rr]ate\(rad\/s\)=(-?\d+\.\d+)/
-  const regexMeanRadius = /Vol\.MeanRadius\(km\)=([\d.]+)/
-  // eart (2) = /Siderealorbperiod=([\d.]+)/
-  const regexOrbitPeriod = /Siderealorb\.per\.=([\d.]+)/
-  // earth (2) = /Meansurfacetemp\(Ts\),K=([\d.]+)/
-  const regexMeanTemp = /MeanTemperature\(K\)=([\d.]+)/
+  const regexDensity = /Density\,?(?:\(?gcm\^\-?3\)?|\(?g\/cm\^\-?3\)?)=(\d+\.\d+)/
+  const regexRotationRate = /[Rr]ot\.[Rr]ate\,?\(?rad\/s\)?=(-?\d+\.\d+)/
+  const regexMeanRadius = /Vol\.[Mm]ean[Rr]adius\(km\)=([\d.]+)/
+  // eart (2) = /Siderealorbperiod=([\d.]+)//(Siderealorb\.per\.d=|Siderealorbperiod=|siderealorbper=|Siderealorbitperiod=)(\d+(\.\d+)?)(?!y)/
+  const regexOrbitPeriod = /(Siderealorb\.per\.\,?y?=|Siderealorbperiod=|siderealorbper=|Siderealorbitperiod=)(\d+(?:\.\d+)?)/
+  // earth (2) = /Meansurfacetemp\(Ts\),K=([\d.]+)/ if temps == null temp == unknown | réfléchir a enlever la température car chiant
+  const regexMeanTemp = /(Mean[Tt]emperature\(K\)=|Meansurfacetemp\(Ts\),K=)([\d.]+)/
   // earth (2) = /Obliquitytoorbit,deg=([\d.-]+)/
-  const regexObliquity = /Obliquitytoorbit\[1\]=([\d.-]+)/
+  const regexObliquity = /(Obliquitytoorbit\[?1?\]?=|Obliquitytoorbit,deg=)([\d.-]+)/
   // earth (2) = /Meansiderealday,hr=([\d.]+)/
-  const regexRotationDays = /Siderealrot\.period=([\d.]+)/
+  const regexRotationDays = /(Siderealrot\.period=|Sid.rot.period\(III\)=|Meansiderealday,hr=)([\dhms.]+)/
   //earth (2) = /Orbitalspeed,km\/s=([\d.]+)/
-  const regexOrbitalSpeed = /MeanOrbitvel\.km\/s=([\d.]+)/
+  const regexOrbitalSpeed = /([Oo]rbitvel\.km\/s=|Orbitalspeed,km\/s=|[Oo]rbitspeed\,km\/s=|orbitvelocity=)([\d.]+)/
   const regexPlacment = /(-?\d+(?:\.\d+)?(?:E[+-]?\d+)?)Y=(-?\d+(?:\.\d+)?(?:E[+-]?\d+)?)Z=(-?\d+(?:\.\d+)?(?:E[+-]?\d+)?)/
 
  
@@ -35,23 +31,16 @@ export function horizonAPI(data) {
   const iregexRotationRate = texteSansEspaces.match(regexRotationRate);
   const iregexMeanRadius = texteSansEspaces.match(regexMeanRadius);
   const iregexOrbitPeriod  = texteSansEspaces.match(regexOrbitPeriod);
-  const iregexMeanTemp = texteSansEspaces.match(regexMeanTemp);
+  let iregexMeanTemp = texteSansEspaces.match(regexMeanTemp);
   const iregexObliquity = texteSansEspaces.match(regexObliquity);
   const iregexRotationDays = texteSansEspaces.match(regexRotationDays);
   const iregexOrbitalSpeed = texteSansEspaces.match(regexOrbitalSpeed);
   const iregexPlacment = texteSansEspaces.match(regexPlacment);
 
-  console.log(iregexNameID)
-  console.log(iregexDensity)
-  console.log(iregexRotationRate )
-  console.log(iregexMeanRadius)
-  console.log(iregexOrbitPeriod  )
-  console.log(iregexMeanTemp)
-  console.log(iregexObliquity)
-  console.log(iregexRotationDays )
-  console.log(iregexOrbitalSpeed )
-  console.log(iregexPlacment)
-
+function filterTemp(){
+  if (iregexMeanTemp === null) { return iregexMeanTemp = "Unknown"}
+    else { return iregexMeanTemp[2]}
+}
   
   return {
     id : iregexNameID[2], 
@@ -64,13 +53,11 @@ export function horizonAPI(data) {
       z : iregexPlacment[3]
     },
     rotationSpeed : iregexRotationRate[1], 
-    rotationDuration : iregexRotationDays[1], 
-    orbitSpeed : iregexOrbitalSpeed[1], 
-    orbitDuration : iregexOrbitPeriod[1], 
-    oblliquity : iregexObliquity[1],
+    rotationDuration : iregexRotationDays[2], 
+    orbitSpeed : iregexOrbitalSpeed[2], 
+    orbitDuration : iregexOrbitPeriod[2], 
+    oblliquity : iregexObliquity[2],
     density : iregexDensity[1],
-    meanTemperature : iregexMeanTemp[1]
+    meanTemperature :  filterTemp() 
   }; 
-    
-
 }

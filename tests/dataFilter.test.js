@@ -46,7 +46,7 @@ test('horizonAPI() should return Venus data', () => {
         rotationSpeed : "-0.00000029924", 
         rotationDuration : "243.018484", 
         orbitSpeed : "35.021", 
-        orbitDuration : "224.70079922", 
+        orbitDuration : "0.61519726", 
         oblliquity : "177.3",
         density : "5.204",
         meanTemperature : "735"
@@ -68,17 +68,17 @@ test('horizonAPI() should return Earth data', () => {
         sizeRadius : "6371.01", 
         material : "Earth.png", 
         coordinate : {
-          x : "1.073618289428096E+07", 
-          y : "1.428930836016723E+08",
-          z : "6.291878178878881E+06"
+          x : "-1.116613234083490E+08", 
+          y : "-9.446394564291658E+07",
+          z : "-4.091379678603614E+07"
         },
         rotationSpeed : "0.00007292115", 
-        rotationDuration : "24", 
+        rotationDuration : "24h", 
         orbitSpeed : "29.79", 
-        orbitDuration : "365.25636", 
+        orbitDuration : "1.0000174", 
         oblliquity : "23.4392911",
         density : "5.51",
-        meanTemperature : "255"
+        meanTemperature : "287.6"
     };
 
     const result = horizonAPI(earth);
@@ -101,9 +101,9 @@ test('horizonAPI() should return Mars data', () => {
           z : "7.984203671250358E+06"
         },
         rotationSpeed : "0.0000708822", 
-        rotationDuration : "24.622962", 
-        orbitSpeed : "24.13 ", 
-        orbitDuration : "686.98", 
+        rotationDuration : "24.622962h", 
+        orbitSpeed : "24.13", 
+        orbitDuration : "1.88081578", 
         oblliquity : "25.19",
         density : "3.933",
         meanTemperature : "210"
@@ -121,7 +121,7 @@ test('horizonAPI() should return Jupiter data', () => {
     const jupiterExpected = {
         id : "599", 
         name : "Jupiter",
-        sizeRadius : "71492", 
+        sizeRadius : "69911", 
         material : "Jupiter.png", 
         coordinate : {
           x : "7.900239544305509E+08", 
@@ -129,12 +129,12 @@ test('horizonAPI() should return Jupiter data', () => {
           z : "-1.643804799922679E+07"
         },
         rotationSpeed : "0.00017585", 
-        rotationDuration : "9h 55m 29.71s", 
+        rotationDuration : "9h55m29.71s", 
         orbitSpeed : "13.0697", 
         orbitDuration : "11.861982204", 
         oblliquity : "3.13",
         density : "1.3262",
-        meanTemperature : "165"
+        meanTemperature : "Unknown"
     };
 
     const result = horizonAPI(jupiter);
@@ -158,12 +158,12 @@ test('horizonAPI() should return Saturn data', () => {
           z : "-3.764483124414477E+07"
         },
         rotationSpeed : "0.000163785", 
-        rotationDuration : "10h 39m 22.4s", 
+        rotationDuration : "10h39m22.4s", 
         orbitSpeed : "9.68", 
         orbitDuration : "29.447498", 
         oblliquity : "26.73",
         density : "0.687",
-        meanTemperature : "134"
+        meanTemperature : "Unknown"
     };
 
     const result = horizonAPI(saturn);
@@ -191,7 +191,7 @@ test('horizonAPI() should return Uranus data', () => {
         orbitDuration : "84.0120465", 
         oblliquity : "97.77",
         density : "1.271",
-        meanTemperature : "76"
+        meanTemperature : "Unknown"
     };
 
     const result = horizonAPI(uranus);
@@ -208,20 +208,20 @@ test('horizonAPI() should return Neptune data', () => {
     const neptuneExpected = {
         id : "899", 
         name : "Neptune",
-        sizeRadius : "24622", 
+        sizeRadius : "24624", 
         material : "Neptune.png", 
         coordinate : {
-          x : "4.565706901419279E+09", 
-          y : "-2.770728733134779E+08",
-          z : "-9.486172147488065E+07"
+          x : "4.567398114374511E+09", 
+          y : "-2.794219386842926E+08",
+          z : "-9.485098077934098E+07"
         },
-        rotationSpeed : "1.08333333", 
+        rotationSpeed : "0.000108338", 
         rotationDuration : "16.11", 
         orbitSpeed : "5.43", 
-        orbitDuration : "164.79", 
+        orbitDuration : "164.788501027", 
         oblliquity : "28.32",
         density : "1.638",
-        meanTemperature : "72"
+        meanTemperature : "Unknown"
     };
 
     const result = horizonAPI(neptune);
