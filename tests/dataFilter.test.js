@@ -1,8 +1,19 @@
+/**
+ *  @file      dataFilter.test.js
+ *  @brief     Used to test filtredata function to be sure every thing working.  
+ *  @author    Created by Miakel Juillet
+ *  @version   12.05.2023
+ */
+
 import { expect, test } from 'vitest';
-import {horizonAPI} from './src/model/dataFilter.js';
+import {horizonAPIFilter} from './src/model/dataFilter.js';
 import Allplanets from './src/assets/AllPlanetsData-08-05-2023.json';
 
-test('horizonAPI() should return Mercury data', () => {
+
+/**
+ * Test horizonAPIFilter() function should return Mercury data
+ */
+test('horizonAPIFilter() should return Mercury data', () => {
 
     const mercury = Allplanets.planets[0].result;
     const mercuryExpected = {
@@ -24,13 +35,16 @@ test('horizonAPI() should return Mercury data', () => {
         meanTemperature : "440"
     };
 
-    const result = horizonAPI(mercury);
+    const result = horizonAPIFilter(mercury);
 
     expect(result).toEqual(mercuryExpected);
 
 });
 
-test('horizonAPI() should return Venus data', () => {
+/**
+ * Test horizonAPIFilter() function should return Mercury data
+ */
+test('horizonAPIFilter() should return Venus data', () => {
 
     const venus = Allplanets.planets[1].result;
     const venusExpected = {
@@ -52,14 +66,16 @@ test('horizonAPI() should return Venus data', () => {
         meanTemperature : "735"
     };
 
-    const result = horizonAPI(venus);
+    const result = horizonAPIFilter(venus);
 
     expect(result).toEqual(venusExpected);
 
 });
 
-
-test('horizonAPI() should return Earth data', () => {
+/**
+ * Test horizonAPIFilter() function should return Earth data
+ */
+test('horizonAPIFilter() should return Earth data', () => {
 
     const earth = Allplanets.planets[2].result;
     const earthExpected = {
@@ -81,13 +97,16 @@ test('horizonAPI() should return Earth data', () => {
         meanTemperature : "287.6"
     };
 
-    const result = horizonAPI(earth);
+    const result = horizonAPIFilter(earth);
 
     expect(result).toEqual(earthExpected);
 
 })
 
-test('horizonAPI() should return Mars data', () => {
+/**
+ * Test horizonAPIFilter() function should return Mars data 
+ */
+test('horizonAPIFilter() should return Mars data', () => {
 
     const mars = Allplanets.planets[3].result;
     const marsExpected = {
@@ -109,13 +128,16 @@ test('horizonAPI() should return Mars data', () => {
         meanTemperature : "210"
     };
 
-    const result = horizonAPI(mars);
+    const result = horizonAPIFilter(mars);
 
     expect(result).toEqual(marsExpected);
 
 })
 
-test('horizonAPI() should return Jupiter data', () => {
+/**
+ * Test horizonAPIFilter() function should return Jupiter data
+*/
+test('horizonAPIFilter() should return Jupiter data', () => {
 
     const jupiter = Allplanets.planets[4].result;
     const jupiterExpected = {
@@ -137,14 +159,16 @@ test('horizonAPI() should return Jupiter data', () => {
         meanTemperature : "Unknown"
     };
 
-    const result = horizonAPI(jupiter);
+    const result = horizonAPIFilter(jupiter);
 
     expect(result).toEqual(jupiterExpected);
 
 })
  
-
-test('horizonAPI() should return Saturn data', () => {
+/**
+ * Test horizonAPIFilter() function should return Saturn data
+*/
+test('horizonAPIFilter() should return Saturn data', () => {
 
     const saturn = Allplanets.planets[5].result;
     const saturnExpected = {
@@ -166,13 +190,16 @@ test('horizonAPI() should return Saturn data', () => {
         meanTemperature : "Unknown"
     };
 
-    const result = horizonAPI(saturn);
+    const result = horizonAPIFilter(saturn);
 
     expect(result).toEqual(saturnExpected);
 
 })
 
-test('horizonAPI() should return Uranus data', () => {
+/**
+ * Test horizonAPIFilter() function should return Uranus data
+ */
+test('horizonAPIFilter() should return Uranus data', () => {
 
     const uranus = Allplanets.planets[6].result;
     const uranusExpected = {
@@ -194,15 +221,16 @@ test('horizonAPI() should return Uranus data', () => {
         meanTemperature : "Unknown"
     };
 
-    const result = horizonAPI(uranus);
+    const result = horizonAPIFilter(uranus);
 
     expect(result).toEqual(uranusExpected);
 
 })
 
-
-
-test('horizonAPI() should return Neptune data', () => {
+/**
+ * Test horizonAPIFilter() function should return Neptune data
+ */
+test('horizonAPIFilter() should return Neptune data', () => {
 
     const neptune = Allplanets.planets[7].result;
     const neptuneExpected = {
@@ -224,7 +252,7 @@ test('horizonAPI() should return Neptune data', () => {
         meanTemperature : "Unknown"
     };
 
-    const result = horizonAPI(neptune);
+    const result = horizonAPIFilter(neptune);
 
     expect(result).toEqual(neptuneExpected);
 

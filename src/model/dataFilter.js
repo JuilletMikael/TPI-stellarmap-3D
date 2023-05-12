@@ -1,63 +1,63 @@
 /**
- *  @file      jsonConvertion.js
- *  @brief     Principal file
+ *  @file      dataFilter.js
+ *  @brief     Used to filter data coming from api 
  *  @author    Created by Miakel Juillet
- *  @version   09.05.2023
+ *  @version   12.05.2023
  */
 
-export function horizonAPI(data) {
+/**
+ * This function used to catch with regex data in the text returned by horizon API.
+ *
+ * @param data  big string - returned by API correspondant to a specific planet.
+ * @return  object - content list of elements getted in data entry
+ */
+export function horizonAPIFilter(data) {
   
+  // Delete space in text to have uniform data
   let texteSansEspaces = data.replace(/\s+/g, "");
   
+  // Regex define for all elements
   const regexNameID = /Revised:\w+\d+,\d+([^\d]+)(\d+)/
   const regexDensity = /Density\,?(?:\(?gcm\^\-?3\)?|\(?g\/cm\^\-?3\)?)=(\d+\.\d+)/
   const regexRotationRate = /[Rr]ot\.[Rr]ate\,?\(?rad\/s\)?=(-?\d+\.\d+)/
   const regexMeanRadius = /Vol\.[Mm]ean[Rr]adius\(km\)=([\d.]+)/
-  // eart (2) = /Siderealorbperiod=([\d.]+)//(Siderealorb\.per\.d=|Siderealorbperiod=|siderealorbper=|Siderealorbitperiod=)(\d+(\.\d+)?)(?!y)/
   const regexOrbitPeriod = /(Siderealorb\.per\.\,?y?=|Siderealorbperiod=|siderealorbper=|Siderealorbitperiod=)(\d+(?:\.\d+)?)/
-  // earth (2) = /Meansurfacetemp\(Ts\),K=([\d.]+)/ if temps == null temp == unknown | réfléchir a enlever la température car chiant
   const regexMeanTemp = /(Mean[Tt]emperature\(K\)=|Meansurfacetemp\(Ts\),K=)([\d.]+)/
-  // earth (2) = /Obliquitytoorbit,deg=([\d.-]+)/
   const regexObliquity = /(Obliquitytoorbit\[?1?\]?=|Obliquitytoorbit,deg=)([\d.-]+)/
-  // earth (2) = /Meansiderealday,hr=([\d.]+)/
   const regexRotationDays = /(Siderealrot\.period=|Sid.rot.period\(III\)=|Meansiderealday,hr=)([\dhms.]+)/
-  //earth (2) = /Orbitalspeed,km\/s=([\d.]+)/
   const regexOrbitalSpeed = /([Oo]rbitvel\.km\/s=|Orbitalspeed,km\/s=|[Oo]rbitspeed\,km\/s=|orbitvelocity=)([\d.]+)/
   const regexPlacment = /(-?\d+(?:\.\d+)?(?:E[+-]?\d+)?)Y=(-?\d+(?:\.\d+)?(?:E[+-]?\d+)?)Z=(-?\d+(?:\.\d+)?(?:E[+-]?\d+)?)/
 
- 
-  const iregexNameID = texteSansEspaces.match(regexNameID);
-  const iregexDensity = texteSansEspaces.match(regexDensity);
-  const iregexRotationRate = texteSansEspaces.match(regexRotationRate);
-  const iregexMeanRadius = texteSansEspaces.match(regexMeanRadius);
-  const iregexOrbitPeriod  = texteSansEspaces.match(regexOrbitPeriod);
-  let iregexMeanTemp = texteSansEspaces.match(regexMeanTemp);
-  const iregexObliquity = texteSansEspaces.match(regexObliquity);
-  const iregexRotationDays = texteSansEspaces.match(regexRotationDays);
-  const iregexOrbitalSpeed = texteSansEspaces.match(regexOrbitalSpeed);
-  const iregexPlacment = texteSansEspaces.match(regexPlacment);
 
-function filterTemp(){
-  if (iregexMeanTemp === null) { return iregexMeanTemp = "Unknown"}
-    else { return iregexMeanTemp[2]}
-}
+  // Match data with regex
+  const matchNameID = texteSansEspaces.match(regexNameID);
+  const matchDensity = texteSansEspaces.match(regexDensity);
+  const matchRotationRate = texteSansEspaces.match(regexRotationRate);
+  const matchMeanRadius = texteSansEspaces.match(regexMeanRadius);
+  const matchOrbitPeriod  = texteSansEspaces.match(regexOrbitPeriod);
+  const matchMeanTemp = texteSansEspaces.match(regexMeanTemp);
+  const matchObliquity = texteSansEspaces.match(regexObliquity);
+  const matchRotationDays = texteSansEspaces.match(regexRotationDays);
+  const matchOrbitalSpeed = texteSansEspaces.match(regexOrbitalSpeed);
+  const matchPlacment = texteSansEspaces.match(regexPlacment);
   
+  // Return data in object form
   return {
-    id : iregexNameID[2], 
-    name : iregexNameID[1],
-    sizeRadius : iregexMeanRadius[1], 
-    material : iregexNameID[1] + ".png", 
+    id : matchNameID[2], 
+    name : matchNameID[1],
+    sizeRadius : matchMeanRadius[1], 
+    material : matchNameID[1] + ".png", 
     coordinate : {
-      x : iregexPlacment[1], 
-      y : iregexPlacment[2],
-      z : iregexPlacment[3]
+      x : matchPlacment[1], 
+      y : matchPlacment[2],
+      z : matchPlacment[3]
     },
-    rotationSpeed : iregexRotationRate[1], 
-    rotationDuration : iregexRotationDays[2], 
-    orbitSpeed : iregexOrbitalSpeed[2], 
-    orbitDuration : iregexOrbitPeriod[2], 
-    oblliquity : iregexObliquity[2],
-    density : iregexDensity[1],
-    meanTemperature :  filterTemp() 
+    rotationSpeed : matchRotationRate[1], 
+    rotationDuration : matchRotationDays[2], 
+    orbitSpeed : matchOrbitalSpeed[2], 
+    orbitDuration : matchOrbitPeriod[2], 
+    oblliquity : matchObliquity[2],
+    density : matchDensity[1],
+    meanTemperature :  matchMeanTemp ? matchMeanTemp[2] : "Unknown" 
   }; 
 }
