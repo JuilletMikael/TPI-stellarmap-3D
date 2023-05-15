@@ -6,7 +6,7 @@
  */
 
 
-class Moon extends PlanetaryCelestialBodies {
+export class Moon extends PlanetaryCelestialBodies {
     animation(planet) {
         this.mesh.position.set(
             Math.cos(time) * 8 + planet.position.x,

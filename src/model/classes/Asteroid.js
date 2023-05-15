@@ -8,7 +8,7 @@
 
 import * as THREE from 'three';
 
-class Asteroid {
+export class Asteroid {
   constructor(id, name, estimatedDiameter, closeAprocheDate, potentiallyHazardous, orbitingBody, missDistance) {
     this.id = id;
     this.name = name;

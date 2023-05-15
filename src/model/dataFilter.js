@@ -14,7 +14,7 @@
 export function horizonAPIFilter(data) {
   
   // Delete space in text to have uniform data
-  let dataWithoutSpace = data.replace(/\s+/g, "");
+  let dataWithoutSpace = data.result.replace(/\s+/g, "");
   
   // Regex define for all elements
   const regexNameID = /Revised:\w+\d+,\d+([^\d]+)(\d+)/
@@ -45,8 +45,7 @@ export function horizonAPIFilter(data) {
   return {
     id : matchNameID[2], 
     name : matchNameID[1],
-    sizeRadius : matchMeanRadius[1], 
-    material : matchNameID[1] + ".png", 
+    sizeRadius : matchMeanRadius[1],  
     coordinate : {
       x : matchPlacment[1], 
       y : matchPlacment[2],
