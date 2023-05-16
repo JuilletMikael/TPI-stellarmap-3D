@@ -2,28 +2,34 @@
  *  @file      main.js
  *  @brief     Principal file
  *  @author    Created by Miakel Juillet
- *  @version   12.05.2023
+ *  @version   15.05.2023
  */
 
 import { horizonAPIFilter } from './src/model/dataFilter.js';
-import { render } from './src/model/renderer.js';
+import { Renderer } from './src/model/classes/Renderer.js';
 import { Planet } from './src/model/classes/Planet.js';
-import * as THREE from 'three';
 
 async function main() {
-  const scene = render();
 
   const allPlanets = await import('./src/assets/AllPlanetsData-08-05-2023.json');
+  let planetList = [];
 
-  allPlanets.planets.forEach( async element => {
+  allPlanets.planets.forEach( element => {
     const filteredPlanet = horizonAPIFilter(element);
-    const planet = await generatePlanets(filteredPlanet);
-
-    scene.add(planet.mesh)
+    const planet = generatePlanets(filteredPlanet);
+    planetList.push(planet);
   });
+
+  const renderer = new Renderer(document.getElementById('canvas'), planetList);
+
+  const animate = () => {
+    requestAnimationFrame(animate);
+    renderer.animate();
+  };
+  animate();
 }
-  
-async function generatePlanets(filteredPlanet){
+
+function generatePlanets(filteredPlanet){
   const planet = new Planet(
     filteredPlanet.id,
     filteredPlanet.name,

@@ -20,6 +20,7 @@ export class Planet extends PlanetaryCelestialBodies{
             rotationDuration, 
             orbitSpeed, 
             orbitDuration,
-            meanTemperature);
+            meanTemperature
+            );
       }
 }

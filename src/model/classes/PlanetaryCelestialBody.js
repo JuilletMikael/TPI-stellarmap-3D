@@ -2,7 +2,7 @@
  *  @file      PlanetaryCelestialBody.js
  *  @brief     Class of Planetary Celestial Body
  *  @author    Created by Miakel Juillet
- *  @version   08.05.2023
+ *  @version   15.05.2023
  */
 
 import * as THREE from 'three';
@@ -20,11 +20,11 @@ export class PlanetaryCelestialBodies {
     this.orbitSpeed = orbitSpeed;
     this.orbitDuration = orbitDuration;
     this.meanTemperature = meanTemperature;
-    this.mesh = this.createMesh();
+    this.mesh = this.#createMesh();
   }
 
-  createMesh() {
-    const geometry = new THREE.SphereGeometry(3, 64, 16 );
+  #createMesh() {
+    const geometry = new THREE.SphereGeometry(this.sizeRadius / 10000, 64, 16 );
     const texture = new THREE.TextureLoader().load("./src/assets/images/" + this.textureFile);
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const mesh =  new THREE.Mesh(geometry, material);
