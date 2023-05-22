@@ -6,9 +6,11 @@
  */
 
 import * as THREE from 'three';
-import { Vector3 } from 'three';
 
 export class PlanetaryCelestialBodies {
+
+  #clock = new THREE.Clock();
+  #pointPivot = new THREE.Group();
 
   constructor(id, name, sizeRadius, textureFile, coordinates, rotationSpeed, rotationDuration, orbitSpeed, orbitDuration, meanTemperature) {
     this.id = id;
@@ -25,22 +27,31 @@ export class PlanetaryCelestialBodies {
   }
 
   #createMesh() {
-    const geometry = new THREE.SphereGeometry(this.sizeRadius / 10000, 64, 16 );
+    const geometry = new THREE.SphereGeometry(this.sizeRadius / 500, 64, 16 );
     const texture = new THREE.TextureLoader().load("./src/assets/images/" + this.textureFile);
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const mesh =  new THREE.Mesh(geometry, material);
-    mesh.position.set(parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, parseFloat(this.coordinates.z) / 5000000);
+    mesh.position.set(parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, 0);
     return mesh;
   }
 
   animation() {
-    this.mesh.rotation.y = this.rotationSpeed;
-    this.mesh.position.applyAxisAngle( new THREE.Vector3( 0, 0, 1), (168 * 3600) / (this.orbitSpeed * 10000000));
-  }
+    const deltaTime = this.#clock.getDelta();
+
+    // Faites tourner la planète sur elle-même
+    this.mesh.rotation.x = this.rotationSpeed;
+
+    const distanceFactor = 2 * Math.PI ; // Facteur de distance pour ajuster la rotation
+    const timeFactor = deltaTime / (this.orbitDuration * 365 * 60 * 60); // Facteur de temps pour ajuster la rotation
+
+    // Rotation de Mercure
+    this.#pointPivot.rotation.z += this.orbitSpeed * (Math.sqrt((Math.pow(this.coordinates.x, 2) * Math.pow(this.coordinates.y, 2), 2))) * distanceFactor * timeFactor  * 1000;
+
+  } 
 
   createOrbit() {
-    const planet = new THREE.Vector3( parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, parseFloat(this.coordinates.z) / 5000000 );
-    const b = new THREE.Vector3( );
+    const planet = new THREE.Vector3( parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, 0 );
+    const b = new THREE.Vector3(0,0,0 );
     const d = planet.distanceTo( b );
 
     const geometry = new THREE.BufferGeometry().setFromPoints(
@@ -49,6 +60,12 @@ export class PlanetaryCelestialBodies {
     const material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
     const orbit = new THREE.Line(geometry, material);
     return orbit;
+  }
+
+  planetarySystem() {
+    console.log(this.mesh)
+    this.#pointPivot.add(this.mesh);
+    return this.#pointPivot;
   }
 
 }
