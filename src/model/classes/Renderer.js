@@ -54,8 +54,8 @@ export class Renderer {
             this.animate();
         });
 
-        // add users controls
-        const controls = new OrbitControls( this.#camera, this.#renderer.domElement );
+        // Add users controls
+        new OrbitControls( this.#camera, this.#renderer.domElement );
         
         // Sun creation
         var sunGeometry = new THREE.SphereGeometry(8, 64, 16);

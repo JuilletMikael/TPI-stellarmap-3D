@@ -18,5 +18,12 @@ export async function GetAsteroid() {
     const startDate = moment().subtract(1, 'day').format('YYYY-MM-DD');
     const endDate = moment().format('YYYY-MM-DD');
 
-    return await GetNearEarthObjects(APIkey, startDate, endDate);
+    const result =  await GetNearEarthObjects(APIkey, startDate, endDate);
+
+    if (result.near_earth_objects[endDate.toString()])
+    {
+        return result.near_earth_objects[endDate.toString()]
+    }
+
+    return result.near_earth_objects[startDate.toString()]
 }

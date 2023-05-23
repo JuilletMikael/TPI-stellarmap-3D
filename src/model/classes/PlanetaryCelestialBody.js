@@ -47,7 +47,7 @@ export class PlanetaryCelestialBody {
   * @return {THREE.mesh} returns a mesh 
   */
   #createMesh() {
-    const geometry = new THREE.SphereGeometry(this.sizeRadius / 1000, 64, 16 );
+    const geometry = new THREE.SphereGeometry(this.sizeRadius / 2900, 64, 16 );
     const texture = new THREE.TextureLoader().load("./src/assets/images/" + this.textureFile);
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const mesh =  new THREE.Mesh(geometry, material);

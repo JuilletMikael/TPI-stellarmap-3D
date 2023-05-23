@@ -6,8 +6,10 @@
  */
 
 import { horizonAPIFilter } from './src/model/dataFilter.js';
+import { GetAsteroid } from './src/controller/requests.js'
 import { Renderer } from './src/model/classes/Renderer.js';
 import { Planet } from './src/model/classes/Planet.js';
+import { Asteroid } from './src/model/classes/Asteroid.js';
 
 /** 
 * Main function of teh project will be ussed first
@@ -31,6 +33,9 @@ async function main() {
     renderer.animate();
   };
   animate();
+
+
+  generateAsteroid()
 }
 
 /** 
@@ -53,5 +58,23 @@ function generatePlanets(filteredPlanet){
   )
   return planet;
 }
+
+async function generateAsteroid(){
+  const gettedObjects = await GetAsteroid();
+  console.log(gettedObjects);
+  gettedObjects.forEach(element => {
+    const asteroid = new Asteroid(
+      element.id,
+      element.name,
+      element.estimated_diameter.kilometers.estimated_diameter_max,
+      element.close_approach_data[0].close_approach_date_full,
+      element.is_potentially_hazardous_asteroid,
+      element.close_approach_data[0].orbiting_body,
+      element.close_approach_data[0].miss_distance.kilometers
+    )
+    console.log(asteroid)
+  });
+}
+
 
 main();
