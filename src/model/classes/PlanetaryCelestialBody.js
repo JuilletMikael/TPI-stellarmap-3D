@@ -2,16 +2,32 @@
  *  @file      PlanetaryCelestialBody.js
  *  @brief     Class of Planetary Celestial Body
  *  @author    Created by Miakel Juillet
- *  @version   15.05.2023
+ *  @version   23.05.2023
  */
 
 import * as THREE from 'three';
 
-export class PlanetaryCelestialBodies {
+/**
+* Used to manage planetary celestial body
+*/
+export class PlanetaryCelestialBody {
 
   #clock = new THREE.Clock();
   #pointPivot = new THREE.Group();
 
+  /** 
+  * Used to construct the planetary celestial body
+  * @param id - ID of planetary celestial body
+  * @param name - Name of planetary celestial body
+  * @param sizeRadius - SizeRadius of planetary celestial body
+  * @param textureFile - TextureFile of planetary celestial body
+  * @param coordinates - Coordinates of planetary celestial body as an object x,y,z
+  * @param rotationSpeed - RotationSpeed of planetary celestial body
+  * @param rotationDuration - RotationDuration of planetary celestial body
+  * @param orbitSpeed - OrbitSpeed of planetary celestial body
+  * @param orbitDuration - OrbitDuration of planetary celestial body
+  * @param meanTemperature - MeanTemperature of planetary celestial body
+  */
   constructor(id, name, sizeRadius, textureFile, coordinates, rotationSpeed, rotationDuration, orbitSpeed, orbitDuration, meanTemperature) {
     this.id = id;
     this.name = name;
@@ -26,29 +42,43 @@ export class PlanetaryCelestialBodies {
     this.mesh = this.#createMesh();
   }
 
+  /** 
+  * Used to create mesh with threejs 
+  * @return {THREE.mesh} returns a mesh 
+  */
   #createMesh() {
-    const geometry = new THREE.SphereGeometry(this.sizeRadius / 500, 64, 16 );
+    const geometry = new THREE.SphereGeometry(this.sizeRadius / 1000, 64, 16 );
     const texture = new THREE.TextureLoader().load("./src/assets/images/" + this.textureFile);
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const mesh =  new THREE.Mesh(geometry, material);
-    mesh.position.set(parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, 0);
+    mesh.position.set(parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, 0);  
+    mesh.rotation.set(3, 3, 0)
     return mesh;
   }
 
+  /** 
+  * Used to animate planetary celestial body
+  * @summary It specicly create rotation and orbitation.
+  */
   animation() {
-    const deltaTime = this.#clock.getDelta();
+    const deltaTime = this.#clock.getDelta();   
 
-    // Faites tourner la planète sur elle-même
-    this.mesh.rotation.x = this.rotationSpeed;
+    this.mesh.rotation.x = 190
+    this.mesh.rotation.y += this.rotationSpeed * 10;
 
-    const distanceFactor = 2 * Math.PI ; // Facteur de distance pour ajuster la rotation
-    const timeFactor = deltaTime / (this.orbitDuration * 365 * 60 * 60); // Facteur de temps pour ajuster la rotation
+    const rayon = (Math.sqrt((Math.pow(this.coordinates.x, 2) /5000000 ) + (Math.pow(this.coordinates.y, 2)/5000000)))
+    const distanceFactor = 2 * Math.PI * rayon; //km périmèter 
+    const timeFactor = this.orbitDuration * 365 * 24 * 60 * 60; //years => seconds 
 
-    // Rotation de Mercure
-    this.#pointPivot.rotation.z += this.orbitSpeed * (Math.sqrt((Math.pow(this.coordinates.x, 2) * Math.pow(this.coordinates.y, 2), 2))) * distanceFactor * timeFactor  * 1000;
+    const vitesse =  distanceFactor / timeFactor;
+    this.#pointPivot.rotation.z += vitesse;
 
   } 
 
+  /** 
+  * Used to create a vector to watch the path of the planetary celestial body
+  * @return {THREE.mesh} mesh of the orbit
+  */
   createOrbit() {
     const planet = new THREE.Vector3( parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, 0 );
     const b = new THREE.Vector3(0,0,0 );
@@ -62,8 +92,11 @@ export class PlanetaryCelestialBodies {
     return orbit;
   }
 
+  /** 
+  * Used to construct the planetary system to have a group of the sytem
+  * @return {THREE.Group} A group of threejs
+  */
   planetarySystem() {
-    console.log(this.mesh)
     this.#pointPivot.add(this.mesh);
     return this.#pointPivot;
   }

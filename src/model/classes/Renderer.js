@@ -2,12 +2,15 @@
  *  @file      renderer.js
  *  @brief     Ussed to create three.js renderer.
  *  @author    Created by Miakel Juillet
- *  @version   15.05.2023
+ *  @version   23.05.2023
  */
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
+/**
+* Ussed to manage an renderer
+*/
 export class Renderer {
 
     #renderer;
@@ -16,23 +19,34 @@ export class Renderer {
     #camera;
     #sun;
 
+    /** 
+    * Construct the Renderer 
+    * @param canvas - Canvas that used to define where's the rendere will be created
+    * @param planetList - A list of planets that need to integrete them inside the sceen
+    */
     constructor(canvas, planetList){
         
+        // Construct parms
         this.canvas = canvas;
         this.#planetList = planetList; 
 
+        // Create sceen
         this.#scene = new THREE.Scene();
     
+        // Adding camera
         this.#camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);
         this.#camera.position.z = 50;
     
+        // Adding light
         const light = new THREE.PointLight(0xFFFFFF, 3, 300);
         this.#scene.add(light);
         
+        // Create renderer 
         this.#renderer =  new THREE.WebGLRenderer({ canvas:  this.canvas });
         this.#renderer.setSize(window.innerWidth, window.innerHeight);
         this.#renderer.render( this.#scene, this.#camera);
 
+        // Resize render when listen to resize
         window.addEventListener('resize', () => {
             this.#camera.aspect = window.innerWidth / window.innerHeight;
             this.#camera.updateProjectionMatrix();
@@ -40,6 +54,7 @@ export class Renderer {
             this.animate();
         });
 
+        // add users controls
         const controls = new OrbitControls( this.#camera, this.#renderer.domElement );
         
         // Sun creation
@@ -51,6 +66,7 @@ export class Renderer {
         this.#sun.rotation.x = 360;
         this.#scene.add(this.#sun);
 
+        // Create planets
         this.#planetList.forEach(planet => {
             const planetSystem = planet.planetarySystem(); // Appel de la méthode planetarySystem pour obtenir le point de pivot de la planète
             this.#scene.add(planetSystem); // Ajout du point de pivot de la planète à la scène
@@ -59,6 +75,10 @@ export class Renderer {
         });
     }
 
+    /** 
+     * Used to animate planetary celestial body
+     * @summary It specicly create rotation and orbitation.
+     */
     animate() {
         this.#planetList.forEach(planet => {
             planet.animation();

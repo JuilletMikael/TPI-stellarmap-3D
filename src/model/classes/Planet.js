@@ -2,12 +2,15 @@
  *  @file      Planet.js
  *  @brief     Class of Planet
  *  @author    Created by Miakel Juillet
- *  @version   15.05.2023
+ *  @version   23.05.2023
  */
-import { PlanetaryCelestialBodies } from './PlanetaryCelestialBody.js';
+import { PlanetaryCelestialBody } from './PlanetaryCelestialBody.js';
 
-
-export class Planet extends PlanetaryCelestialBodies{
+/**
+* Planet is extended from PlanetaryCelestialBody class
+* @extends PlanetaryCelestialBody
+*/
+export class Planet extends PlanetaryCelestialBody{
 
     constructor(id, name, sizeRadius, textureFile, coordinates, rotationSpeed, rotationDuration, orbitSpeed, orbitDuration, meanTemperature) {
         super(

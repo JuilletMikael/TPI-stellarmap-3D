@@ -2,11 +2,20 @@
  *  @file      Moon.js
  *  @brief     Class of moon
  *  @author    Created by Miakel Juillet
- *  @version   08.05.2023
+ *  @version   23.05.2023
  */
 
+/**
+* Moon is extended from PlanetaryCelestialBody class
+* @extends PlanetaryCelestialBody
+*/
+export class Moon extends PlanetaryCelestialBody {
 
-export class Moon extends PlanetaryCelestialBodies {
+    /** 
+    * Used to animate moon
+    * @summary It specicly change the orbit to be around planet and not sun 
+    * @param planet - This is the planet targeted 
+    */
     animation(planet) {
         this.mesh.position.set(
             Math.cos(time) * 8 + planet.position.x,
