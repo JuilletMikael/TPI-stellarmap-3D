@@ -32,7 +32,6 @@ export class Asteroid {
     const texture = new THREE.TextureLoader().load("/src/assets/images/Asteroid.jpg");
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const mesh = new THREE.Mesh(geometry, material);
-    console.log(this.orbitingBody.coordinates.x / 5000000);
     mesh.position.set(this.orbitingBody.coordinates.x / 5000000 - this.missDistance / 5000000 , this.orbitingBody.coordinates.y / 5000000 - this.missDistance / 5000000, 0);
     return mesh;
   }

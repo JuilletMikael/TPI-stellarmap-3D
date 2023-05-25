@@ -278,3 +278,35 @@ test('horizonAPIFilter() should return Neptune data', () => {
   expect(result).toEqual(neptuneExpected);
 
 })
+
+/**
+ * Test horizonAPIFilter() function should return Moon (Luna) data
+ */
+test('horizonAPIFilter() should return Moon (Luna) data', () => {
+  //Given
+  const moon = Allplanets.planets[0].result;
+  const moonExpected = {
+      id : "301", 
+      name : "Moon",
+      sizeRadius : "2440", 
+      material : "Moon.png", 
+      coordinate : {
+        x : "-1.120212318906567E+08", 
+        y : "-9.459880486576790E+07",
+        z : "-4.096417249183436E+07"
+      },
+      rotationSpeed : "0.0000026617", 
+      rotationDuration : "27.3", 
+      orbitSpeed : "1.023219504166749", 
+      orbitDuration : "0.07479452054", 
+      oblliquity : "6.67",
+      density : "3.3437",
+      meanTemperature : "-62.5"
+  };
+
+  //When
+  const result = horizonAPIFilter(moon);
+
+  //Then
+  expect(result).toEqual(moonExpected);
+});

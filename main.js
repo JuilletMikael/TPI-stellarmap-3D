@@ -9,6 +9,7 @@ import { horizonAPIFilter } from './src/model/dataFilter.js';
 import { GetAsteroid } from './src/controller/requests.js'
 import { Renderer } from './src/model/classes/Renderer.js';
 import { Planet } from './src/model/classes/Planet.js';
+import { Moon } from './src/model/classes/Moon.js';
 import { Asteroid } from './src/model/classes/Asteroid.js';
 
 /** 
@@ -19,13 +20,32 @@ async function main() {
   const allPlanets = await import('./src/assets/AllPlanetsData-08-05-2023.json');
   let planetList = [];
 
+  const moonGetted = allPlanets.moons[0];
+  const filtredMoon = horizonAPIFilter(moonGetted);
+  const moon = new Moon(
+    filtredMoon.id,
+    filtredMoon.name,
+    filtredMoon.sizeRadius,
+    filtredMoon.name + ".jpg",
+    filtredMoon.coordinate,
+    filtredMoon.rotationSpeed,
+    filtredMoon.rotationDuration,
+    filtredMoon.orbitSpeed,
+    filtredMoon.orbitDuration,
+    filtredMoon.meanTemperature
+  );
+
   // Loop around all planets getted from the allPlanets data
   allPlanets.planets.forEach( element => {
     const filteredPlanet = horizonAPIFilter(element);
     const planet = generatePlanets(filteredPlanet);
 
+    planet.planetarySystem = moon.mesh;
+
     planetList.push(planet);
   });
+
+
   
   await generateAsteroid(planetList);
 
