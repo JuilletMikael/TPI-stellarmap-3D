@@ -19,8 +19,7 @@ export class Asteroid {
     this.orbitingBody = orbitingBody;
     this.missDistance = missDistance;
     this.mesh = this.#createMesh();
-
-    orbitingBody.planetarySystem = this.mesh;
+    orbitingBody.planetarySystem.add(this.mesh);
   }
 
   /** 

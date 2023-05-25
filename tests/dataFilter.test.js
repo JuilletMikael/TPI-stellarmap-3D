@@ -15,12 +15,11 @@ import Allplanets from './src/assets/AllPlanetsData-08-05-2023.json';
  */
 test('horizonAPIFilter() should return Mercury data', () => {
     //Given
-    const mercury = Allplanets.planets[0].result;
+    const mercury = Allplanets.planets[0];
     const mercuryExpected = {
         id : "199", 
         name : "Mercury",
         sizeRadius : "2440", 
-        material : "Mercury.png", 
         coordinate : {
           x : "6.439857249172552E+07", 
           y : "5.346674700502940E+07",
@@ -47,16 +46,15 @@ test('horizonAPIFilter() should return Mercury data', () => {
  */
 test('horizonAPIFilter() should return Venus data', () => {
   //Given
-  const venus = Allplanets.planets[1].result;
+  const venus = Allplanets.planets[1];
   const venusExpected = {
       id : "299", 
       name : "Venus",
       sizeRadius : "6051.84", 
-      material : "Venus.png", 
       coordinate : {
-        x : "1.073618289428096E+07", 
-        y : "1.428930836016723E+08",
-        z : "6.291878178878881E+06"
+        x : "-1.009251405140681E+08", 
+        y : "3.413512994790523E+07",
+        z : "2.169849297722414E+07"
       },
       rotationSpeed : "-0.00000029924", 
       rotationDuration : "243.018484", 
@@ -81,12 +79,11 @@ test('horizonAPIFilter() should return Venus data', () => {
 test('horizonAPIFilter() should return Earth data', () => {
 
   //Given
-  const earth = Allplanets.planets[2].result;
+  const earth = Allplanets.planets[2];
   const earthExpected = {
       id : "399", 
       name : "Earth",
       sizeRadius : "6371.01", 
-      material : "Earth.png", 
       coordinate : {
         x : "-1.116613234083490E+08", 
         y : "-9.446394564291658E+07",
@@ -115,12 +112,11 @@ test('horizonAPIFilter() should return Earth data', () => {
 test('horizonAPIFilter() should return Mars data', () => {
 
   //Given
-  const mars = Allplanets.planets[3].result;
+  const mars = Allplanets.planets[3];
   const marsExpected = {
       id : "499", 
       name : "Mars",
       sizeRadius : "3389.92", 
-      material : "Mars.png", 
       coordinate : {
         x : "-9.172658128265008E+07", 
         y : "2.475395789325977E+08",
@@ -149,12 +145,11 @@ test('horizonAPIFilter() should return Mars data', () => {
 test('horizonAPIFilter() should return Jupiter data', () => {
 
   //Given
-  const jupiter = Allplanets.planets[4].result;
+  const jupiter = Allplanets.planets[4];
   const jupiterExpected = {
       id : "599", 
       name : "Jupiter",
       sizeRadius : "69911", 
-      material : "Jupiter.png", 
       coordinate : {
         x : "7.900239544305509E+08", 
         y : "3.977974646088730E+08",
@@ -183,12 +178,11 @@ test('horizonAPIFilter() should return Jupiter data', () => {
 test('horizonAPIFilter() should return Saturn data', () => {
 
   //Given
-  const saturn = Allplanets.planets[5].result;
+  const saturn = Allplanets.planets[5];
   const saturnExpected = {
       id : "699", 
       name : "Saturn",
       sizeRadius : "58232", 
-      material : "Saturn.png", 
       coordinate : {
         x : "1.377989499063393E+09", 
         y : "-6.338851815853779E+08",
@@ -217,12 +211,11 @@ test('horizonAPIFilter() should return Saturn data', () => {
 test('horizonAPIFilter() should return Uranus data', () => {
 
   //Given
-  const uranus = Allplanets.planets[6].result;
+  const uranus = Allplanets.planets[6];
   const uranusExpected = {
       id : "799", 
       name : "Uranus",
       sizeRadius : "25362", 
-      material : "Uranus.png", 
       coordinate : {
         x : "2.056177409121107E+09", 
         y : "2.306377240773124E+09",
@@ -251,12 +244,11 @@ test('horizonAPIFilter() should return Uranus data', () => {
 test('horizonAPIFilter() should return Neptune data', () => {
 
   //Given
-  const neptune = Allplanets.planets[7].result;
+  const neptune = Allplanets.planets[7];
   const neptuneExpected = {
       id : "899", 
       name : "Neptune",
       sizeRadius : "24624", 
-      material : "Neptune.png", 
       coordinate : {
         x : "4.567398114374511E+09", 
         y : "-2.794219386842926E+08",
@@ -284,24 +276,24 @@ test('horizonAPIFilter() should return Neptune data', () => {
  */
 test('horizonAPIFilter() should return Moon (Luna) data', () => {
   //Given
-  const moon = Allplanets.planets[0].result;
+  const moon = Allplanets.moons[0];
   const moonExpected = {
       id : "301", 
       name : "Moon",
-      sizeRadius : "2440", 
-      material : "Moon.png", 
+      sizeRadius : "1737.53", 
       coordinate : {
-        x : "-1.120212318906567E+08", 
-        y : "-9.459880486576790E+07",
-        z : "-4.096417249183436E+07"
+        x : "-3.599084823076050E+05", 
+        y : "-1.437692228511653E+05",
+        z : "7.425111683050563E+03"
       },
       rotationSpeed : "0.0000026617", 
       rotationDuration : "27.3", 
       orbitSpeed : "1.023219504166749", 
       orbitDuration : "0.07479452054", 
       oblliquity : "6.67",
+      orbitingBody : "Earth",
       density : "3.3437",
-      meanTemperature : "-62.5"
+      meanTemperature : "Unknown"
   };
 
   //When

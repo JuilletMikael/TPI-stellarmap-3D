@@ -26,4 +26,6 @@ export class Planet extends PlanetaryCelestialBody{
             meanTemperature
             );
       }
+
+
 }

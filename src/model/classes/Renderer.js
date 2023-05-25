@@ -7,6 +7,7 @@
 
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { Moon } from './Moon';
 
 /**
 * Ussed to manage an renderer
@@ -14,7 +15,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 export class Renderer {
 
     #renderer;
-    #planetList;
+    #bodiesList;
     #scene;
     #camera;
     #sun;
@@ -22,13 +23,13 @@ export class Renderer {
     /** 
     * Construct the Renderer 
     * @param canvas - Canvas that used to define where's the rendere will be created
-    * @param planetList - A list of planets that need to integrete them inside the sceen
+    * @param bodiesList - A list of bodiess that need to integrete them inside the sceen
     */
-    constructor(canvas, planetList){
+    constructor(canvas, bodiesList){
         
         // Construct parms
         this.canvas = canvas;
-        this.#planetList = planetList; 
+        this.#bodiesList = bodiesList; 
 
         // Create sceen
         this.#scene = new THREE.Scene();
@@ -66,29 +67,25 @@ export class Renderer {
         this.#sun.rotation.x = 360;
         this.#scene.add(this.#sun);
 
-        // Create planets
-        this.#planetList.forEach(planet => {
-            const planetSystem = planet.planetarySystem; // Appel de la méthode planetarySystem pour obtenir le point de pivot de la planète
-            this.#scene.add(planetSystem); // Ajout du point de pivot de la planète à la scène
-            const orbit = planet.createOrbit(); // Appel de la méthode createOrbit pour obtenir l'objet orbite de la planète
-            this.#scene.add(orbit); // Ajout de l'objet orbite à la scène
+        // Create bodies
+        this.#bodiesList.forEach(bodies => {
+            const bodiesSystem = bodies.planetarySystem;
+            this.#scene.add(bodiesSystem); 
+            bodies.createOrbit();
         });
     }
-
-
 
     /** 
      * Used to animate planetary celestial body
      * @summary It specicly create rotation and orbitation.
      */
     animate() {
-        this.#planetList.forEach(planet => {
-            planet.animation();
+        this.#bodiesList.forEach(bodies => {
+            bodies.animation();
         });
 
         this.#sun.rotation.y += 0.00007292115;
 
         this.#renderer.render( this.#scene, this.#camera );
     }
-
 }

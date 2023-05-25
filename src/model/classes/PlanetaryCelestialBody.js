@@ -13,7 +13,6 @@ import * as THREE from 'three';
 export class PlanetaryCelestialBody {
 
   #clock = new THREE.Clock();
-  #planetarySystem = new THREE.Group();
 
   /** 
   * Used to construct the planetary celestial body
@@ -39,6 +38,7 @@ export class PlanetaryCelestialBody {
     this.orbitSpeed = orbitSpeed;
     this.orbitDuration = orbitDuration;
     this.meanTemperature = meanTemperature;
+    this.planetarySystem = new THREE.Group();
     this.mesh = this.#createMesh();
   }
 
@@ -52,8 +52,9 @@ export class PlanetaryCelestialBody {
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const mesh =  new THREE.Mesh(geometry, material);
     mesh.position.set(parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, 0);  
-    mesh.rotation.set(3, 3, 0);
-    this.#planetarySystem.add(mesh);
+    mesh.rotation.set(190, 0, 0);
+
+    this.planetarySystem.add(mesh)
     return mesh;
   }
 
@@ -64,16 +65,14 @@ export class PlanetaryCelestialBody {
   animation() {
     const deltaTime = this.#clock.getDelta();   
 
-    this.mesh.rotation.x = 190
     this.mesh.rotation.y += this.rotationSpeed * 10;
 
     const rayon = (Math.sqrt((Math.pow(this.coordinates.x, 2) /5000000 ) + (Math.pow(this.coordinates.y, 2)/5000000)))
-    const distanceFactor = 2 * Math.PI * rayon; //km périmèter 
+    const distanceFactor = 2 * Math.PI * rayon; //km 
     const timeFactor = this.orbitDuration * 365 * 24 * 60 * 60; //years => seconds 
 
     const vitesse =  distanceFactor / timeFactor;
-    this.#planetarySystem.rotation.z += vitesse;
-
+    this.planetarySystem.rotation.z += vitesse / 100;
   } 
 
   /** 
@@ -90,23 +89,28 @@ export class PlanetaryCelestialBody {
     );
     const material = new THREE.LineBasicMaterial({color: 0xFFFFFF});
     const orbit = new THREE.Line(geometry, material);
-    return orbit;
+    this.planetarySystem.add(orbit);
   }
 
-  /** 
-  * Used to construct the planetary system to have a group of the sytem
-  * @return {THREE.Group} A group of threejs
-  */
-  get planetarySystem(){
-    return this.#planetarySystem;
-  }
+  placePlanetarySystem(coordinates) {
+    const haaa = {
+      x: 10, 
+      y: 10,
+      z:0
+    }
+  
+    const boxGeometry = new THREE.BoxGeometry(0, 0, 0);
+    const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+  
+    // Create the box mesh
+    const box = new THREE.Mesh(boxGeometry, boxMaterial);
+    console.log(this.planetarySystem)
 
-  /** 
-  * Used to construct the planetary system to have a group of the sytem
-  * @return {THREE.Group} A group of threejs
-  */
-  set planetarySystem(value){
-    this.#planetarySystem.add(value);
+    this.planetarySystem.add(box);
+    console.log(this.planetarySystem)
+
+    this.planetarySystem.position.set(haaa);
   }
+  
 
 }

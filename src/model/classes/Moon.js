@@ -12,7 +12,7 @@ import { PlanetaryCelestialBody } from './PlanetaryCelestialBody.js';
 */
 export class Moon extends PlanetaryCelestialBody {
 
-    constructor(id, name, sizeRadius, textureFile, coordinates, rotationSpeed, rotationDuration, orbitSpeed, orbitDuration, meanTemperature) {
+    constructor(id, name, sizeRadius, textureFile, coordinates, rotationSpeed, rotationDuration, orbitSpeed, orbitDuration, meanTemperature, orbitingBody) {
         super(
             id, 
             name, 
@@ -25,18 +25,6 @@ export class Moon extends PlanetaryCelestialBody {
             orbitDuration,
             meanTemperature
         );
-    }
-
-    /** 
-    * Used to animate moon
-    * @summary It specicly change the orbit to be around planet and not sun 
-    * @param planet - This is the planet targeted 
-    */
-    animation(planet) {
-        this.mesh.position.set(
-            Math.cos(time) * 8 + planet.position.x,
-            Math.sin(time) * 8 + planet.position.y,
-            0
-        );
+        this.orbitingBody = orbitingBody;
     }
 }
