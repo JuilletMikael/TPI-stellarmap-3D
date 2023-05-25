@@ -2,7 +2,7 @@
  *  @file      renderer.js
  *  @brief     Ussed to create three.js renderer.
  *  @author    Created by Miakel Juillet
- *  @version   23.05.2023
+ *  @version   25.05.2023
  */
 
 import * as THREE from 'three';
@@ -68,12 +68,14 @@ export class Renderer {
 
         // Create planets
         this.#planetList.forEach(planet => {
-            const planetSystem = planet.planetarySystem(); // Appel de la méthode planetarySystem pour obtenir le point de pivot de la planète
+            const planetSystem = planet.planetarySystem; // Appel de la méthode planetarySystem pour obtenir le point de pivot de la planète
             this.#scene.add(planetSystem); // Ajout du point de pivot de la planète à la scène
             const orbit = planet.createOrbit(); // Appel de la méthode createOrbit pour obtenir l'objet orbite de la planète
             this.#scene.add(orbit); // Ajout de l'objet orbite à la scène
         });
     }
+
+
 
     /** 
      * Used to animate planetary celestial body

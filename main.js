@@ -2,7 +2,7 @@
  *  @file      main.js
  *  @brief     Principal file
  *  @author    Created by Miakel Juillet
- *  @version   23.05.2023
+ *  @version   25.05.2023
  */
 
 import { horizonAPIFilter } from './src/model/dataFilter.js';
@@ -23,8 +23,11 @@ async function main() {
   allPlanets.planets.forEach( element => {
     const filteredPlanet = horizonAPIFilter(element);
     const planet = generatePlanets(filteredPlanet);
+
     planetList.push(planet);
   });
+  
+  await generateAsteroid(planetList);
 
   const renderer = new Renderer(document.getElementById('canvas'), planetList);
 
@@ -35,7 +38,7 @@ async function main() {
   animate();
 
 
-  generateAsteroid()
+  
 }
 
 /** 
@@ -59,21 +62,22 @@ function generatePlanets(filteredPlanet){
   return planet;
 }
 
-async function generateAsteroid(){
+async function generateAsteroid(planetList){
   const gettedObjects = await GetAsteroid();
-  console.log(gettedObjects);
+  let listOfAsteroids = []
   gettedObjects.forEach(element => {
-    const asteroid = new Asteroid(
+      const asteroid = new Asteroid(
       element.id,
       element.name,
       element.estimated_diameter.kilometers.estimated_diameter_max,
       element.close_approach_data[0].close_approach_date_full,
       element.is_potentially_hazardous_asteroid,
-      element.close_approach_data[0].orbiting_body,
+      planetList.find(planet => planet.name == element.close_approach_data[0].orbiting_body),
       element.close_approach_data[0].miss_distance.kilometers
     )
-    console.log(asteroid)
+    listOfAsteroids.push(asteroid);
   });
+  return listOfAsteroids;
 }
 
 

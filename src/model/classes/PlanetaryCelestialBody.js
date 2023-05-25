@@ -13,7 +13,7 @@ import * as THREE from 'three';
 export class PlanetaryCelestialBody {
 
   #clock = new THREE.Clock();
-  #pointPivot = new THREE.Group();
+  #planetarySystem = new THREE.Group();
 
   /** 
   * Used to construct the planetary celestial body
@@ -52,7 +52,8 @@ export class PlanetaryCelestialBody {
     const material = new THREE.MeshBasicMaterial({ map: texture });
     const mesh =  new THREE.Mesh(geometry, material);
     mesh.position.set(parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, 0);  
-    mesh.rotation.set(3, 3, 0)
+    mesh.rotation.set(3, 3, 0);
+    this.#planetarySystem.add(mesh);
     return mesh;
   }
 
@@ -71,7 +72,7 @@ export class PlanetaryCelestialBody {
     const timeFactor = this.orbitDuration * 365 * 24 * 60 * 60; //years => seconds 
 
     const vitesse =  distanceFactor / timeFactor;
-    this.#pointPivot.rotation.z += vitesse;
+    this.#planetarySystem.rotation.z += vitesse;
 
   } 
 
@@ -96,9 +97,16 @@ export class PlanetaryCelestialBody {
   * Used to construct the planetary system to have a group of the sytem
   * @return {THREE.Group} A group of threejs
   */
-  planetarySystem() {
-    this.#pointPivot.add(this.mesh);
-    return this.#pointPivot;
+  get planetarySystem(){
+    return this.#planetarySystem;
+  }
+
+  /** 
+  * Used to construct the planetary system to have a group of the sytem
+  * @return {THREE.Group} A group of threejs
+  */
+  set planetarySystem(value){
+    this.#planetarySystem.add(value);
   }
 
 }

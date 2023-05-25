@@ -2,7 +2,7 @@
  *  @file      Asteroid.js
  *  @brief     Class of asteroid
  *  @author    Created by Miakel Juillet
- *  @version   08.05.2023
+ *  @version   25.05.2023
  */
 
 
@@ -17,16 +17,18 @@ export class Asteroid {
     this.potentiallyHazardous = potentiallyHazardous;
     this.orbitingBody = orbitingBody;
     this.missDistance = missDistance;
+    this.mesh = this.#createMesh();
+
+    orbitingBody.planetarySystem = this.mesh;
   }
 
-  get mesh() {
-      if (this.mesh === undefined || this.mesh === null) {
-        const geometry = new THREE.SphereGeometry(this.sizeRadius);
-        const texture = new THREE.TextureLoader().load("asteroid.png");
-        const material = new THREE.MeshBasicMaterial({ map: texture });
-        this.mesh = new THREE.Mesh(geometry, material);
-        this.mesh.position.x += this.positionX;
-      }
-      return this.mesh;
+  #createMesh() {
+    const geometry = new THREE.SphereGeometry(this.estimatedDiameter);
+    const texture = new THREE.TextureLoader().load("/src/assets/images/Asteroid.jpg");
+    const material = new THREE.MeshBasicMaterial({ map: texture });
+    const mesh = new THREE.Mesh(geometry, material);
+    console.log(this.orbitingBody.coordinates.x / 5000000);
+    mesh.position.set(this.orbitingBody.coordinates.x / 5000000 - this.missDistance / 5000000 , this.orbitingBody.coordinates.y / 5000000 - this.missDistance / 5000000, 0);
+    return mesh;
   }
 }
