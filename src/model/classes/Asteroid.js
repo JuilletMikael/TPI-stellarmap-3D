@@ -4,10 +4,11 @@
  *  @author    Created by Miakel Juillet
  *  @version   25.05.2023
  */
-
-
 import * as THREE from 'three';
 
+/**
+* This class is used to manage asteroid
+*/
 export class Asteroid {
   constructor(id, name, estimatedDiameter, closeAprocheDate, potentiallyHazardous, orbitingBody, missDistance) {
     this.id = id;
@@ -22,6 +23,10 @@ export class Asteroid {
     orbitingBody.planetarySystem = this.mesh;
   }
 
+  /** 
+  * Create mesh of the asteroid
+  * @return {THREE.mesh} returns a mesh
+  */
   #createMesh() {
     const geometry = new THREE.SphereGeometry(this.estimatedDiameter);
     const texture = new THREE.TextureLoader().load("/src/assets/images/Asteroid.jpg");
