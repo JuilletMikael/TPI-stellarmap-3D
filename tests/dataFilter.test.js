@@ -291,7 +291,6 @@ test('horizonAPIFilter() should return Moon (Luna) data', () => {
       orbitSpeed : "1.023219504166749", 
       orbitDuration : "0.07479452054", 
       oblliquity : "6.67",
-      orbitingBody : "Earth",
       density : "3.3437",
       meanTemperature : "Unknown"
   };

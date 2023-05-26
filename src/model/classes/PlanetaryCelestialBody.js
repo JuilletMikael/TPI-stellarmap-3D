@@ -13,6 +13,7 @@ import * as THREE from 'three';
 export class PlanetaryCelestialBody {
 
   #clock = new THREE.Clock();
+  #all = new THREE.Group();
 
   /** 
   * Used to construct the planetary celestial body
@@ -72,7 +73,7 @@ export class PlanetaryCelestialBody {
     const timeFactor = this.orbitDuration * 365 * 24 * 60 * 60; //years => seconds 
 
     const vitesse =  distanceFactor / timeFactor;
-    this.planetarySystem.rotation.z += vitesse / 100;
+    this.planetarySystem.rotation.z += vitesse / 10;
   } 
 
   /** 
@@ -92,25 +93,9 @@ export class PlanetaryCelestialBody {
     this.planetarySystem.add(orbit);
   }
 
-  placePlanetarySystem(coordinates) {
-    const haaa = {
-      x: 10, 
-      y: 10,
-      z:0
-    }
-  
-    const boxGeometry = new THREE.BoxGeometry(0, 0, 0);
-    const boxMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-  
-    // Create the box mesh
-    const box = new THREE.Mesh(boxGeometry, boxMaterial);
-    console.log(this.planetarySystem)
-
-    this.planetarySystem.add(box);
-    console.log(this.planetarySystem)
-
-    this.planetarySystem.position.set(haaa);
-  }
-  
+  placeMoonSystem(body) {
+    body.planetarySystem.add(this.planetarySystem); 
+    this.planetarySystem.position.set(body.coordinates.x / 5000000, body.coordinates.y / 5000000, 0);
+  }   
 
 }

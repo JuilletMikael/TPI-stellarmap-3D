@@ -4,6 +4,7 @@
  *  @author    Created by Miakel Juillet
  *  @version   23.05.2023
  */
+import { MultiplyOperation } from 'three';
 import { PlanetaryCelestialBody } from './PlanetaryCelestialBody.js';
 
 /**

@@ -27,7 +27,11 @@ async function main() {
     filtredMoon.name,
     filtredMoon.sizeRadius,
     filtredMoon.name + ".jpg",
-    filtredMoon.coordinate,
+    {
+      x: filtredMoon.coordinate.x * 50,
+      y: filtredMoon.coordinate.y * 50,
+      z: filtredMoon.coordinate.z * 50
+    },
     filtredMoon.rotationSpeed,
     filtredMoon.rotationDuration,
     filtredMoon.orbitSpeed,
@@ -35,7 +39,7 @@ async function main() {
     filtredMoon.meanTemperature, 
     "Earth"
   );
-
+  
   // Loop around all planets getted from the allPlanets data
   allPlanets.planets.forEach( element => {
     const filteredPlanet = horizonAPIFilter(element);
@@ -44,14 +48,15 @@ async function main() {
   });
 
   const body = bodiesList.find(bodies => bodies.name === moon.orbitingBody);
-  moon.placePlanetarySystem(body.coordinates);
+  moon.placeMoonSystem(body);
+  moon.createOrbit();
 
-  bodiesList.push(moon);
-  //await generateAsteroid(bodiesList);
+  await generateAsteroid(bodiesList);
   const renderer = new Renderer(document.getElementById('canvas'), bodiesList);
 
   const animate = () => {
     requestAnimationFrame(animate);
+    moon.animation();
     renderer.animate();
   };
   animate();  

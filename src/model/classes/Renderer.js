@@ -35,7 +35,7 @@ export class Renderer {
         this.#scene = new THREE.Scene();
     
         // Adding camera
-        this.#camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);
+        this.#camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 30000);
         this.#camera.position.z = 50;
     
         // Adding light
@@ -56,8 +56,18 @@ export class Renderer {
         });
 
         // Add users controls
-        new OrbitControls( this.#camera, this.#renderer.domElement );
+        const controls = new OrbitControls( this.#camera, this.#renderer.domElement );
+        controls.enablePan = false 
+        controls.maxDistance = 10000
+        controls.update();
         
+        var skyboxGeometry = new THREE.SphereGeometry(-20000, 64, 16);
+        const skyboxTexture = new THREE.TextureLoader().load("./src/assets/images/Skybox.jpg");
+        const skyboxMaterial = new THREE.MeshBasicMaterial({ map: skyboxTexture });
+        const skybox = new THREE.Mesh( skyboxGeometry, skyboxMaterial );
+        this.#scene.add(skybox);
+
+
         // Sun creation
         var sunGeometry = new THREE.SphereGeometry(8, 64, 16);
         const sunTexture = new THREE.TextureLoader().load("./src/assets/images/Sun.jpg");
