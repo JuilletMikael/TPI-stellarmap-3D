@@ -48,7 +48,7 @@ async function main() {
   });
 
   const body = bodiesList.find(bodies => bodies.name === moon.orbitingBody);
-  moon.placeMoonSystem(body);
+  moon.placePlanetarySystem(body);
   moon.createOrbit();
 
   await generateAsteroid(bodiesList);

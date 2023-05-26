@@ -2,7 +2,7 @@
  *  @file      PlanetaryCelestialBody.js
  *  @brief     Class of Planetary Celestial Body
  *  @author    Created by Miakel Juillet
- *  @version   23.05.2023
+ *  @version   26.05.2023
  */
 
 import * as THREE from 'three';
@@ -13,7 +13,6 @@ import * as THREE from 'three';
 export class PlanetaryCelestialBody {
 
   #clock = new THREE.Clock();
-  #all = new THREE.Group();
 
   /** 
   * Used to construct the planetary celestial body
@@ -93,7 +92,7 @@ export class PlanetaryCelestialBody {
     this.planetarySystem.add(orbit);
   }
 
-  placeMoonSystem(body) {
+  placePlanetarySystem(body) {
     body.planetarySystem.add(this.planetarySystem); 
     this.planetarySystem.position.set(body.coordinates.x / 5000000, body.coordinates.y / 5000000, 0);
   }   

@@ -2,7 +2,7 @@
  *  @file      requests.js
  *  @brief     Model that used to make requests.
  *  @author    Created by Miakel Juillet
- *  @version   08.05.2023
+ *  @version   26.05.2023
  */
 
 const urlHorizon = import.meta.env.VITE_API_URL_HORIZON;
@@ -34,7 +34,7 @@ export function GetHorizonSpecificBody(bodyId) {
               }
         })
         .then(response => {
-            resolve(response);
+            resolve(response.json());
         })
         .catch(error => {
             console.error('Error:', error);
@@ -59,9 +59,6 @@ export function GetNearEarthObjects(apiKey, startDate, endDate) {
         fetch(formatURL(urlNeo, parameters))
         .then(response => {
             resolve(response.json()) 
-        })
-        .then(data => {
-            resolve(data.data);
         })
         .catch(function (err) {
             resolve("Something went wrong!", err);

@@ -27,7 +27,7 @@ export class Renderer {
     */
     constructor(canvas, bodiesList){
         
-        // Construct parms
+        // Construct parametters
         this.canvas = canvas;
         this.#bodiesList = bodiesList; 
 
@@ -61,12 +61,12 @@ export class Renderer {
         controls.maxDistance = 10000
         controls.update();
         
-        var skyboxGeometry = new THREE.SphereGeometry(-20000, 64, 16);
+        // Skybox creation 
+        var skyboxGeometry = new THREE.SphereGeometry(-20000, 64, 16); // -20000 for facing interior
         const skyboxTexture = new THREE.TextureLoader().load("./src/assets/images/Skybox.jpg");
         const skyboxMaterial = new THREE.MeshBasicMaterial({ map: skyboxTexture });
         const skybox = new THREE.Mesh( skyboxGeometry, skyboxMaterial );
         this.#scene.add(skybox);
-
 
         // Sun creation
         var sunGeometry = new THREE.SphereGeometry(8, 64, 16);
