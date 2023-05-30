@@ -2,7 +2,7 @@
  *  @file      main.js
  *  @brief     Principal file
  *  @author    Created by Miakel Juillet
- *  @version   25.05.2023
+ *  @version   30.05.2023
  */
 
 import { horizonAPIFilter } from './src/model/dataFilter.js';
@@ -17,6 +17,21 @@ import { Asteroid } from './src/model/classes/Asteroid.js';
 */
 async function main() {
 
+  const loading = document.getElementById("loading");
+  
+  await init();
+
+  //Disable display loading 
+  loading.style.display = "none"; 
+
+  
+}
+
+
+/**
+ * This function is used to initiate the solar system planet 
+ */
+async function init(){
   const allPlanets = await import('./src/assets/AllPlanetsData-08-05-2023.json');
   let bodiesList = [];
 
@@ -61,6 +76,7 @@ async function main() {
   };
   animate();  
 }
+
 
 /** 
 * Generates planets with the planet class by using planet filtred 
