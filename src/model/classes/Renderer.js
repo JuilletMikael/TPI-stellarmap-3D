@@ -96,8 +96,6 @@ export class Renderer {
             bodies.animation();
         });
 
-        this.#sun.rotation.y += 0.00007292115;
-
         this.#renderer.render( this.#scene, this.#camera );
     }
 

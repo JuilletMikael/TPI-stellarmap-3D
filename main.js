@@ -11,6 +11,7 @@ import { Renderer } from './src/model/classes/Renderer.js';
 import { Planet } from './src/model/classes/Planet.js';
 import { Moon } from './src/model/classes/Moon.js';
 import { Asteroid } from './src/model/classes/Asteroid.js';
+import { Color } from 'three';
 
 /** 
 * Main function of teh project will be ussed first
@@ -22,7 +23,7 @@ async function main() {
   await init();
 
   //Disable display loading 
-  loading.style.display = "none"; 
+  loading.style.display = "none";   
 }
 
 
@@ -64,7 +65,7 @@ async function init(){
   moon.placePlanetarySystem(body);
   moon.createOrbit();
 
-  await generateAsteroid(bodiesList);
+ // await generateAsteroid(bodiesList);
   const renderer = new Renderer(document.getElementById('canvas'), bodiesList);
 
   const animate = () => {
@@ -75,16 +76,37 @@ async function init(){
 
   animate();  
 
+  var reply_click = function()
+  {
+      let speed = null;
+
+      switch(this.id){
+        case "speed1": speed = 0.01
+          break;
+        case "speed2": speed = 10
+          break;
+        case "speed3": speed = 30
+          break;
+      }
+
+      bodiesList.forEach(body => {
+        body.speedChanger = speed 
+      })
+
+      moon.speedChanger = speed;
+  }
+  document.getElementById('speed1').onclick = reply_click;
+  document.getElementById('speed2').onclick = reply_click;
+  document.getElementById('speed3').onclick = reply_click;
 
   window.addEventListener('click', (event) => {
     const clickedObject = renderer.onPointerMove(event);
-
+    //handle null body
     const body = bodiesList.find(bodies => bodies.name === clickedObject.object.name);
 
     body.showDescription(document.getElementById("body__Description"));
 
   });
-
 }
 
 /** 

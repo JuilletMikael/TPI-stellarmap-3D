@@ -13,6 +13,7 @@ import * as THREE from 'three';
 export class PlanetaryCelestialBody {
 
   #clock = new THREE.Clock();
+  speedChanger = 0.01;
 
   /** 
   * Used to construct the planetary celestial body
@@ -66,14 +67,15 @@ export class PlanetaryCelestialBody {
   animation() {
     const deltaTime = this.#clock.getDelta();   
 
-    this.mesh.rotation.y += this.rotationSpeed * 10;
+    this.mesh.rotation.y += this.rotationSpeed * (180 / Math.PI) * deltaTime * this.speedChanger * 700;
 
     const rayon = (Math.sqrt((Math.pow(this.coordinates.x, 2) /5000000 ) + (Math.pow(this.coordinates.y, 2)/5000000)))
     const distanceFactor = 2 * Math.PI * rayon; //km 
     const timeFactor = this.orbitDuration * 365 * 24 * 60 * 60; //years => seconds 
 
-    const vitesse =  distanceFactor / timeFactor;
-    this.planetarySystem.rotation.z += vitesse / 10;
+    const speed =  distanceFactor / timeFactor * this.speedChanger * deltaTime ;
+
+    this.planetarySystem.rotation.z += speed ;
   } 
 
   /** 
@@ -82,7 +84,7 @@ export class PlanetaryCelestialBody {
   */
   createOrbit() {
     const planet = new THREE.Vector3( parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, 0 );
-    const b = new THREE.Vector3(0,0,0 );
+    const b = new THREE.Vector3(0,0,0);
     const d = planet.distanceTo( b );
 
     const geometry = new THREE.BufferGeometry().setFromPoints(
@@ -97,6 +99,7 @@ export class PlanetaryCelestialBody {
     body.planetarySystem.add(this.planetarySystem); 
     this.planetarySystem.position.set(body.coordinates.x / 5000000, body.coordinates.y / 5000000, 0);
   }
+
 
   showDescription(element) {
     var texte = 

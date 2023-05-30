@@ -36,3 +36,11 @@ canvas {
     width: 100%;
 
 }
+
+#speed{
+    position: fixed;
+    color: white;
+    z-index: 100;
+    padding: 1vw;
+    width: 100%;
+}
