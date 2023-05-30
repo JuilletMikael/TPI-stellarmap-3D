@@ -53,6 +53,7 @@ export class PlanetaryCelestialBody {
     const mesh =  new THREE.Mesh(geometry, material);
     mesh.position.set(parseFloat(this.coordinates.x) / 5000000, parseFloat(this.coordinates.y) / 5000000, 0);  
     mesh.rotation.set(190, 0, 0);
+    mesh.name = this.name;
 
     this.planetarySystem.add(mesh)
     return mesh;
@@ -95,6 +96,16 @@ export class PlanetaryCelestialBody {
   placePlanetarySystem(body) {
     body.planetarySystem.add(this.planetarySystem); 
     this.planetarySystem.position.set(body.coordinates.x / 5000000, body.coordinates.y / 5000000, 0);
-  }   
+  }
+
+  showDescription(element) {
+    var texte = 
+    "The body named " + this.name + " has a radius of " + this.sizeRadius + " km. <br>"
+    + this.name + " make a revolution every " + this.orbitDuration +" year's " +
+    " his speed is about " + this.orbitSpeed + " km/s. With a rotation period of " + this.rotationDuration +
+    " and a rotation speed of " + this.rotationSpeed + " km/s. " + " The means temperature is " +  (this.meanTemperature !== "Unknown" ? (this.meanTemperature - 273.15).toFixed(2) + " °C." : " unknown .") ;
+   
+    element.innerHTML = texte;
+  }
 
 }

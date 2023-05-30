@@ -23,8 +23,6 @@ async function main() {
 
   //Disable display loading 
   loading.style.display = "none"; 
-
-  
 }
 
 
@@ -74,9 +72,20 @@ async function init(){
     moon.animation();
     renderer.animate();
   };
-  animate();  
-}
 
+  animate();  
+
+
+  window.addEventListener('click', (event) => {
+    const clickedObject = renderer.onPointerMove(event);
+
+    const body = bodiesList.find(bodies => bodies.name === clickedObject.object.name);
+
+    body.showDescription(document.getElementById("body__Description"));
+
+  });
+
+}
 
 /** 
 * Generates planets with the planet class by using planet filtred 

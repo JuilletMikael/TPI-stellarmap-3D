@@ -19,6 +19,8 @@ export class Renderer {
     #scene;
     #camera;
     #sun;
+    raycaster = new THREE.Raycaster();
+    pointer = new THREE.Vector2();
 
     /** 
     * Construct the Renderer 
@@ -97,5 +99,42 @@ export class Renderer {
         this.#sun.rotation.y += 0.00007292115;
 
         this.#renderer.render( this.#scene, this.#camera );
+    }
+
+    onPointerMove( event ) {
+
+        // calculate pointer position in normalized device coordinates
+        // (-1 to +1) for both components
+    
+        this.pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+        this.pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+        this.raycaster.setFromCamera( this.pointer, this.#camera );
+
+        // calculate objects intersecting the picking ray
+        const intersects = this.raycaster.intersectObjects( this.#scene.children );
+
+        let object = null;
+
+        for ( let i = 0; i < intersects.length; i ++ ) {
+
+            if (intersects[i].object.name){
+                
+                if (object != null){
+                    
+                    if (intersects[i].distance < object.distance){
+
+                        Object = intersects[i]
+                    }
+
+                }
+                
+                object = intersects[i];
+            
+            }
+
+        }
+        
+        return object;
     }
 }
