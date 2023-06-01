@@ -101,11 +101,12 @@ async function init(){
 
   window.addEventListener('click', (event) => {
     const clickedObject = renderer.onPointerMove(event);
-    //handle null body
-    const body = bodiesList.find(bodies => bodies.name === clickedObject.object.name);
-
-    body.showDescription(document.getElementById("body__Description"));
-
+    
+    //handle null clickedObject
+    if (clickedObject != null ) {
+      const body = bodiesList.find(bodies => bodies.name === clickedObject.object.name);
+      body.showDescription(document.getElementById("body__Description"));
+    }
   });
 }
 
