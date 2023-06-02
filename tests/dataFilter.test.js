@@ -2,7 +2,7 @@
  *  @file      dataFilter.test.js
  *  @brief     Used to test filtredata function to be sure every thing working.  
  *  @author    Created by Miakel Juillet
- *  @version   12.05.2023
+ *  @version   02.06.2023
  */
 
 import { expect, test } from 'vitest';
@@ -288,8 +288,8 @@ test('horizonAPIFilter() should return Moon (Luna) data', () => {
       },
       rotationSpeed : "0.0000026617", 
       rotationDuration : "27.3", 
-      orbitSpeed : "1.023219504166749", 
-      orbitDuration : "0.07479452054", 
+      orbitSpeed : "10.23219504166749", 
+      orbitDuration : "0.007479452054", 
       oblliquity : "6.67",
       density : "3.3437",
       meanTemperature : "Unknown"

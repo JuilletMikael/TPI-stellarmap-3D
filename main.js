@@ -2,7 +2,7 @@
  *  @file      main.js
  *  @brief     Principal file
  *  @author    Created by Miakel Juillet
- *  @version   30.05.2023
+ *  @version   02.06.2023
  */
 
 import { horizonAPIFilter } from './src/model/dataFilter.js';
@@ -61,6 +61,7 @@ async function init(){
     bodiesList.push(planet);
   });
 
+  // Find body to place moon
   const body = bodiesList.find(bodies => bodies.name === moon.orbitingBody);
   moon.placePlanetarySystem(body);
   moon.createOrbit();
@@ -76,8 +77,14 @@ async function init(){
 
   animate();  
 
+  // Change speed in function of the buton clicked
   var reply_click = function()
   {
+    document.getElementById("speed1").classList.remove("active");
+    document.getElementById("speed2").classList.remove("active");
+    document.getElementById("speed3").classList.remove("active");
+    document.getElementById(this.id).classList.add("active");
+
       let speed = null;
       switch(this.id){
         case "speed1": speed = 0.01;
@@ -97,9 +104,9 @@ async function init(){
   document.getElementById('speed2').onclick = reply_click;
   document.getElementById('speed3').onclick = reply_click;
 
-
+  // Event for click on planet to get informations
   window.addEventListener('click', (event) => {
-    const clickedObject = renderer.onPointerMove(event);
+    const clickedObject = renderer.onPointerClick(event);
     
     //handle null clickedObject
     if (clickedObject != null ) {
@@ -107,6 +114,8 @@ async function init(){
 
       const body = bodiesList.find(bodies => bodies.name === clickedObject.object.name);
       body.showDescription(document.getElementById("body__Description"));
+    }else {
+      document.getElementById("descriptions").style.display = "none";
     }
   });
 }
@@ -132,6 +141,9 @@ function generatePlanet(filteredPlanet){
   return planet;
 }
 
+/** 
+* generate asteroid list
+*/
 async function generateAsteroid(bodiesList){
   const gettedObjects = await GetAsteroid();
   gettedObjects.forEach(element => {

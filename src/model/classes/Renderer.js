@@ -2,7 +2,7 @@
  *  @file      renderer.js
  *  @brief     Ussed to create three.js renderer.
  *  @author    Created by Miakel Juillet
- *  @version   25.05.2023
+ *  @version   02.06.2023
  */
 
 import * as THREE from 'three';
@@ -98,8 +98,11 @@ export class Renderer {
 
         this.#renderer.render( this.#scene, this.#camera );
     }
-
-    onPointerMove( event ) {
+    /** 
+     * Used to click raycast when clicked 
+     * @param {click envent}
+     */
+    onPointerClick( event ) {
 
         // calculate pointer position in normalized device coordinates
         // (-1 to +1) for both components

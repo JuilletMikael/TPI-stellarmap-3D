@@ -2,7 +2,7 @@
  *  @file      PlanetaryCelestialBody.js
  *  @brief     Class of Planetary Celestial Body
  *  @author    Created by Miakel Juillet
- *  @version   26.05.2023
+ *  @version   02.06.2023
  */
 
 import * as THREE from 'three';
@@ -95,12 +95,19 @@ export class PlanetaryCelestialBody {
     this.planetarySystem.add(orbit);
   }
 
+  /** 
+  * Used to place the planetary system
+  * @param {body} a body where witch one the object is moved
+  */
   placePlanetarySystem(body) {
     body.planetarySystem.add(this.planetarySystem); 
     this.planetarySystem.position.set(body.coordinates.x / 5000000, body.coordinates.y / 5000000, 0);
   }
 
-
+  /** 
+  * Used to create the body description
+  * @param {dom element} element to add text
+  */
   showDescription(element) {
     var texte = 
     "The body named " + this.name + " has a radius of " + this.sizeRadius + " km. <br>"
