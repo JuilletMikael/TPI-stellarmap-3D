@@ -17,7 +17,7 @@ import { Color } from 'three';
 * Main function of teh project will be ussed first
 */
 async function main() {
-
+  document.getElementById("descriptions").style.display = "none";
   const loading = document.getElementById("loading");
   
   await init();
@@ -65,7 +65,7 @@ async function init(){
   moon.placePlanetarySystem(body);
   moon.createOrbit();
 
- // await generateAsteroid(bodiesList);
+  await generateAsteroid(bodiesList);
   const renderer = new Renderer(document.getElementById('canvas'), bodiesList);
 
   const animate = () => {
@@ -79,9 +79,8 @@ async function init(){
   var reply_click = function()
   {
       let speed = null;
-
       switch(this.id){
-        case "speed1": speed = 0.01
+        case "speed1": speed = 0.01;
           break;
         case "speed2": speed = 10
           break;
@@ -93,17 +92,19 @@ async function init(){
         body.speedChanger = speed 
       })
 
-      moon.speedChanger = speed;
   }
   document.getElementById('speed1').onclick = reply_click;
   document.getElementById('speed2').onclick = reply_click;
   document.getElementById('speed3').onclick = reply_click;
+
 
   window.addEventListener('click', (event) => {
     const clickedObject = renderer.onPointerMove(event);
     
     //handle null clickedObject
     if (clickedObject != null ) {
+      document.getElementById("descriptions").style.display = "flex";
+
       const body = bodiesList.find(bodies => bodies.name === clickedObject.object.name);
       body.showDescription(document.getElementById("body__Description"));
     }
